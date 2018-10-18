@@ -1,0 +1,410 @@
+{{#if vehicleData.isMismatchedVRMOnHgvOrPsv }}
+   contactLink = 'https://www.gov.uk/contact-dvsa/y/mot-vehicle-tests-and-approval' ;
+{{/if}}
+<!--
+<?php if ($vehicleData->getErrorCode() == MotTest::VRM_MISMATCH_ERROR_CODE && $vehicleData->isHgvOrPsvVehicle()) :
+    $contactLink = 'https://www.gov.uk/contact-dvsa/y/mot-vehicle-tests-and-approval'; ?>
+
+    There is something wrong with the vehicle details in our database.<br>
+    We can't show you the vehicle's annual test history until the vehicle details are corrected.<br>
+    Review what information DVSA has on your vehicle and let us know which information is wrong or missing by <a
+        class="summary" href="<?php echo $contactLink ?>" target="_blank">contacting DVSA</a>.
+-->
+
+{{#if vehicleData.hasTests}}
+<!--
+    <?php
+        $testSectionCount = 1;
+    ?>
+-->
+    <!-- Post EU only for MOT vehicles -->
+    {{#each vehicleData.motTests}}
+        {{#if this.isTestAfterEUGoLiveDate}}
+
+<!--
+            <?php
+                $testSectionString = "test-section-".$testSectionCount;
+                $isV5cFormHot = $testSectionString == $v5cFormIndex;
+            ?>
+-->
+            <div class="grid-row u-space-b30 u-pad-b15 u-border-bgrey2">
+                <a name="{{testSectionString}}"></a>
+                <!-- <a name="<?php echo $testSectionString;?>"></a> -->
+                <!-- left had col with tested and pass/fail -->
+                <div class="column-one-third">
+
+                    <h3 class="heading-pairs heading-pairs--small-top">
+                        <span>Date tested</span>
+                        {{this.completedDate}}
+                        <!-- <?php echo $testResult->getCompletedDate(); ?> -->
+                    </h3>
+
+                    <h3 class="mot-result <?php echo $testResult->getResultCssClass() ?> u-space-b5">
+                        {{this.result}}
+                        <!--  <?php echo $testResult->getResult() ?> -->
+                    </h3>
+
+                </div>
+
+                <!-- right hand col with vehicle data and results -->
+                <div class="column-two-thirds">
+
+                    {{#if vehicleData.isVehicleFromMot}}
+                    <!-- <?php if ($vehicleData->isVehicleFromMot()) : ?> -->
+
+                        <!-- vehicle data -->
+                        <div class="grid-row">
+
+                            <div class="column-half u-space-b15">
+                                <h3 class="heading-pairs heading-pairs--small-top">
+                                    <span>Mileage</span>
+                                    {{this.odometerReading}}
+                                    <!-- <?php echo $testResult->getOdometerReading(); ?> -->
+                                </h3>
+                            </div>
+
+                            <div class="column-half u-space-b15">
+                                <h3 class="heading-pairs heading-pairs--small-top">
+                                    <span>MOT test number</span>
+                                    {{this.asMotTestNumer}}
+                                    <!-- <?php echo $testResult->getAsMotTestNumber(); ?> -->
+                                </h3>
+                            </div>
+
+                        </div>
+                    {{/if}}
+                    <!-- <?php endif; ?> -->
+
+                    <div class="grid-row">
+
+                        <div class="column-full">
+                            {{#if this.isNonMotVehicle}}
+                            <!-- <?php if ($vehicleData->isNonMotVehicle()) : ?> -->
+                                <div class="grid-row">
+                                    <div class="column-full u-space-b15">
+                                        <h3 class="heading-pairs heading-pairs--small-top">
+                                            <span>Test Certificate number</span>
+                                            {{this.testNumber}}
+                                            <!-- <?php echo $testResult->getTestNumber() ?> -->
+                                        </h3>
+                                    </div>
+                                </div>
+                            {{/if}}
+                            <!-- <?php endif; ?> -->
+                            <div class="grid-row">
+                            {{#if garageDetailsToggle}}
+                            <!-- <?php if ($garageDetailsToggle): ?> -->
+                                <div class="column-half u-space-b15">
+                                    <h3 class="heading-pairs heading-pairs--small-top">
+                                        <span>Test location</span>
+                                        <!--
+                                        <?php
+                                            if (!$v5cHasErrors && $v5cPostedValue != "") {
+                                                echo $this->partial(
+                                                    "mot-history-ui/partials/results/garage-details.phtml",
+                                                     ['testResult' => $testResult]
+                                                );
+                                            }
+                                        ?>
+                                        -->
+                                    </h3>
+
+                                    {{#if v5chasErrors || v5cPostedValue == ""}} 
+                                    <!-- <?php if ($v5cHasErrors || $v5cPostedValue == ""):?> -->
+
+                                        <details class="u-space-t15" role="group" {{#if isV5cFormHot}}"open"{{#else}}"closed"{{/if}} > </details><!-- <?php echo $isV5cFormHot ? "open": "closed";?> > -->
+                                            <summary role="button" aria-controls="test-location-details-0"
+                                                     aria-expanded="true">
+                                                <span class="summary">View test location</span>
+                                            </summary>
+
+                                            <!-- needs more work
+                                            <?php
+                                                $errorClass = ($v5cHasErrors && $isV5cFormHot) ? "form-group-error" : "";
+                                            ?>
+
+                                            <div class="panel panel-border-narrow <?=$errorClass?>" aria-hidden="false"
+                                                 id="test-location-details-0">
+
+                                                <?php
+                                                    if ($testResult->getTestDateWithinDays(IndexController::DAYS_BEFORE_GARAGE_DETAILS)) {
+                                                        echo
+                                                            $this->partial("mot-history-ui/partials/results/wait-for-garage-details.phtml", ['testResult' => $testResult]);
+                                                    }
+                                                    else {
+                                                        echo $this->partial(
+                                                            "mot-history-ui/partials/results/v5c-form.phtml",
+                                                            [
+                                                                'form' => $v5cForm,
+                                                                'formIsHot' => $isV5cFormHot,
+                                                                'testSectionString' => $testSectionString,
+                                                                'v5cValue' => $v5cPostedValue,
+                                                                'csrfToken' => $csrfToken
+                                                            ]
+                                                        );
+                                                    }
+                                                   $testSectionCount++;
+                                                ?>
+                                            </div>
+                                            -->
+
+                                        </details>
+
+                                    {{/if}}
+                                    <!-- <?php endif;?> -->
+
+                                </div>
+                                {{#else}}
+                                <!-- <?php else: ?> -->
+                                    <div class="column-half u-space-b15">
+                                        <h3 class="heading-pairs heading-pairs--small-top">
+                                            <span>Test location</span>
+                                            unavailable until further notice
+                                        </h3>
+                                    </div>
+                                {{/if}}
+                                <!-- <?php endif; ?> -->
+                                {{#if isPassed}}
+                                <!-- <?php if ($testResult->isPassed()): ?> -->
+                                    <div class="column-half u-space-b15">
+                                        <h3 class="heading-pairs heading-pairs--small-top">
+                                            <span>Expiry date</span>
+                                            {{this.expiryDate}}
+                                            <!-- <?php echo $testResult->getExpiryDate() ?> -->
+                                        </h3>
+                                    </div>
+                                {{/if}}
+                                <!-- <?php endif ?> -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- fails and advs-->
+                    <!-- TODO
+                    <?php
+                        echo $this->partial(
+                            "mot-history-ui/partials/results/test-rfrs.phtml",
+                            [
+                                'testName' => $testName,
+                                'testResult' => $testResult
+                            ]
+                        );
+                    ?>
+
+                    -->
+
+                </div>
+
+            </div>
+        {{/if}}
+    {{/each}}
+
+    <!-- Comms Banner -->
+
+    <!--
+    <?php
+    echo $this->partial(
+        'mot-history-ui/partials/comms-banner.phtml',
+        [
+            'vehicleData' => $vehicleData,
+            'isEuRoadWorthinessLive' => $isEuRoadWorthinessLive
+        ]
+    ); ?>
+    -->
+
+    <!-- PRE EU -->
+    {{#each veicleData.motTests}}
+    <!-- <?php foreach ($testHistory as $testResult): ?> -->
+        {{this.isTestAfterEuGoLiveDate}}
+        <!-- <?php if (!$testResult->isTestAfterEuGoLiveDate()) : ?> -->
+
+            <!-- TODO
+            <?php
+                $testSectionString = "test-section-".$testSectionCount;
+                $isV5cFormHot = $testSectionString == $v5cFormIndex;
+            ?>
+            -->
+
+            <div class="grid-row u-space-b30 u-pad-b15 u-border-bgrey2">
+                <a name="{{testSectionString}}"></a>
+                <!-- left had col with tested and pass/fail -->
+                <div class="column-one-third">
+
+                    <h3 class="heading-pairs heading-pairs--small-top">
+                        <span>Date tested</span>
+                        {{this.complededDate}}
+                        <!-- <?php echo $testResult->getCompletedDate(); ?> -->
+                    </h3>
+
+                    <h3 class="mot-result {{this.resultCssClass}} <!--<?php echo $testResult->getResultCssClass() ?> --> u-space-b5">
+                        {{this.result}}
+                        <!-- <?php echo $testResult->getResult() ?> -->
+                    </h3>
+
+                </div>
+
+                <!-- right hand col with vehicle data and results -->
+                <div class="column-two-thirds">
+
+                    {{vehicleData.isVehicleFromMot}}
+                    <!-- <?php if ($vehicleData->isVehicleFromMot()) : ?> -->
+
+                        <!-- vehicle data -->
+                        <div class="grid-row">
+
+                            <div class="column-half u-space-b15">
+                                <h3 class="heading-pairs heading-pairs--small-top">
+                                    <span>Mileage</span>
+                                    {{this.odometerReading}}
+                                    <!-- <?php echo $testResult->getOdometerReading(); ?> -->
+                                </h3>
+                            </div>
+
+                            <div class="column-half u-space-b15">
+                                <h3 class="heading-pairs heading-pairs--small-top">
+                                    <span>MOT test number</span>
+                                    {{this.asMotTestNumber}}
+                                    <!-- <?php echo $testResult->getAsMotTestNumber(); ?> -->
+                                </h3>
+                            </div>
+
+                        </div>
+
+                    {{/if}}
+                    <!-- <?php endif; ?> -->
+
+                    <div class="grid-row">
+
+                        <div class="column-full">
+                            {{#if vehicleData.isNonMotVehicle}}
+                            <!-- <?php if ($vehicleData->isNonMotVehicle()) : ?> -->
+                                <div class="grid-row">
+                                    <div class="column-full u-space-b15">
+                                        <h3 class="heading-pairs heading-pairs--small-top">
+                                            <span>Test Certificate number</span>
+                                            {{this.testNumber}}
+                                            <!-- <?php echo $testResult->getTestNumber() ?> -->
+                                        </h3>
+                                    </div>
+                                </div>
+                            {{/if}}
+                            <!-- <?php endif; ?> -->
+                            <div class="grid-row">
+                                {{#if garageDetailsToggle}}
+                                <!-- <?php if ($garageDetailsToggle): ?> -->
+                                    <div class="column-half u-space-b15">
+                                        <h3 class="heading-pairs heading-pairs--small-top">
+                                            <span>Test location</span>
+                                            <!-- TODO
+                                            <?php
+                                            if (!$v5cHasErrors && $v5cPostedValue != "") {
+                                                echo $this->partial(
+                                                    "mot-history-ui/partials/results/garage-details.phtml",
+                                                    ['testResult' => $testResult]
+                                                );
+                                            }
+                                            ?>
+                                            -->
+                                        </h3>
+                                        <!-- TODO
+                                        <?php if ($v5cHasErrors || $v5cPostedValue == ""):?>
+
+                                            <details class="u-space-t15" role="group" <?php echo $isV5cFormHot ? "open": "closed";?> >
+                                                <summary role="button" aria-controls="test-location-details-0"
+                                                         aria-expanded="true">
+                                                    <span class="summary">View test location</span>
+                                                </summary>
+
+                                                <?php
+                                                $errorClass = ($v5cHasErrors && $isV5cFormHot) ? "form-group-error" : "";
+                                                ?>
+
+                                                <div class="panel panel-border-narrow <?=$errorClass?>" aria-hidden="false"
+                                                     id="test-location-details-0">
+
+                                                    <?php
+                                                    if ($testResult->getTestDateWithinDays(IndexController::DAYS_BEFORE_GARAGE_DETAILS)) {
+                                                        echo
+                                                            $this->partial("mot-history-ui/partials/results/wait-for-garage-details.phtml", ['testResult' => $testResult]);
+                                                    }
+                                                    else {
+                                                        echo $this->partial(
+                                                            "mot-history-ui/partials/results/v5c-form.phtml",
+                                                            [
+                                                                'form' => $v5cForm,
+                                                                'formIsHot' => $isV5cFormHot,
+                                                                'testSectionString' => $testSectionString,
+                                                                'v5cValue' => $v5cPostedValue,
+                                                                'csrfToken' => $csrfToken
+                                                            ]
+                                                        );
+                                                    }
+                                                    $testSectionCount++;
+                                                    ?>
+                                                </div>
+
+                                            </details>
+
+                                        <?php endif;?>
+                                        -->
+                                    </div>
+                                {{#else}}
+                                <!-- <?php else: ?> -->
+                                    <div class="column-half u-space-b15">
+                                        <h3 class="heading-pairs heading-pairs--small-top">
+                                            <span>Test location</span>
+                                            unavailable until further notice
+                                        </h3>
+                                    </div>
+                                {{/if}}
+                                <!-- <?php endif; ?> -->
+                                {{this.isPassed}}
+                                <!-- <?php if ($testResult->isPassed()): ?> -->
+                                    <div class="column-half u-space-b15">
+                                        <h3 class="heading-pairs heading-pairs--small-top">
+                                            <span>Expiry date</span>
+                                            {{this.expiryDate}}
+                                            <!-- <?php echo $testResult->getExpiryDate() ?> -->
+                                        </h3>
+                                    </div>
+                                {{/if}}
+                                <!-- <?php endif ?> -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- fails and advs-->
+                    <!-- TODO
+                    <?php
+                        echo $this->partial(
+                            "mot-history-ui/partials/results/test-rfrs.phtml",
+                            [
+                                'testName' => $testName,
+                                'testResult' => $testResult
+                            ]
+                        );
+                    ?>
+                    -->
+
+                </div>
+
+            </div>
+        
+        {{/if}}
+        <!-- <?php endif; ?> -->
+    {{/each}}
+    <!-- <?php endforeach; ?> -->
+
+{{else}}
+<!-- <?php else: ?> -->
+
+    <div class="grid-row">
+        <div class="column-one-third">
+            <h3 class="heading-medium">
+                No {{testName}} results found
+                <!-- No <?php echo $testName ?> results found -->
+            </h3>
+        </div>
+    </div>
+{{/if}}
+<!-- <?php endif; ?> -->

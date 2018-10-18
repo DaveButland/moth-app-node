@@ -1,0 +1,80 @@
+<div>
+    <a class="link-back" href="/">Back</a>
+</div>
+
+<!--
+<?php if (count($v5cForm->getV5cElement()->getMessages()) > 0): ?>
+
+    <div class="error-summary" role="group" aria-labelledby="error-summary-heading" tabindex="-1">
+        <h2 class="heading-medium error-summary-heading" id="error-summary-heading">There was a problem</h2>
+        <ul class="error-summary-list">
+            <li>
+                <a href="#<?php echo $v5cForm->getFormIndex(); ?>">
+                    <?php foreach ($v5cForm->getV5cElement()->getMessages() as $message): ?>
+                        <div class="validation-message"><?php echo $message ?></div>
+                    <?php endforeach; ?>
+                </a>
+            </li>
+        </ul>
+    </div>
+<?php endif ?>
+-->
+
+<!--
+<?php echo $this->render($viewModel->getTestExpiryBannerViewModel()) ?>
+-->
+
+<h1 class="heading-xlarge heading heading--page-heading heading--small-margin-bottom">
+    <span class="heading-secondary">
+        {{vehicle.registration}}
+    </span>
+    {{vehicle.makeandmodelname}}
+<!--    <?php echo $viewModel->getMakeAndModelName(); ?> -->
+</h1>
+
+<p class="print-hide">
+    <a href="/" id="checkAnotherVehicle">Check another
+        vehicle</a>
+</p>
+
+<div class="grid-row">
+    <div class="column-full">
+        <div class="grid-row">
+            <div class="column-one-third">
+                <h2 class="heading heading--medium heading--no-margin-top heading--small-margin-bottom heading-medium">
+                    <span class="heading__secondary">Colour</span>
+                    {{vehicle.primaryColour}}
+<!--                    <?php echo $viewModel->getPrimaryColour() ?> -->
+                </h2>
+            </div>
+
+            <div class="column-one-third">
+                <h2 class="heading heading--medium heading--no-margin-top heading--small-margin-bottom heading-medium">
+                    <span class="heading__secondary">Fuel type</span>
+                    {{vehicle.fuelType}}
+<!--                    <?php echo $viewModel->getFuelType() ?> -->
+                </h2>
+            </div>
+
+            <div class="column-one-third">
+                <h2 class="heading heading--medium heading--no-margin-top heading--small-margin-bottom heading-medium">
+                    <span class="heading__secondary">Date registered</span>
+                    {{vehicle.firstUsedDate}}
+<!--                    <?php echo $viewModel->getFirstUsedDate() ?> -->
+                </h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--
+
+<?php echo $this->render($viewModel->getTestExpiryDateViewModel()) ?>
+<?php echo $this->render($viewModel->getTestReminderViewModel()) ?>
+
+<?php if ($viewModel->shouldDisplayMotFeesTable()): ?>
+    <p class="print-hide">Check the <a href="https://www.gov.uk/getting-an-mot/mot-test-fees" target="_blank">MOT fees
+            table</a> to see when different vehicle types need their first MOT.</p>
+<?php endif; ?>
+
+-->
